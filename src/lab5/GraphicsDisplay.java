@@ -57,6 +57,36 @@ public class GraphicsDisplay extends JPanel {
         markerStroke = new BasicStroke(1.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, null, 0.0f);
         axisFont = new Font("Serif", Font.BOLD, 36);
 
+
+        this.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                super.mousePressed(e);
+                if (graphicsData == null) return;
+                if (e.getButton() == MouseEvent.BUTTON3 && zooms != null) {
+                    if (zooms.size() > 1) {
+                        zooms.pop();
+                        repaint();
+                    }
+                } else if (e.getButton() == MouseEvent.BUTTON1) {
+                    showRectangle = true;
+                    rectPoint1 = e.getPoint();
+                }
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                super.mouseReleased(e);
+                if (graphicsData == null) return;
+                if (e.getButton() == MouseEvent.BUTTON1 && showRectangle) {
+                    showRectangle = false;
+                    Double[][] zoom = new Double[][]{pointToXY(rectPoint1), pointToXY(rectPoint2)};
+                    zooms.push(zoom);
+                    repaint();
+                }
+            }
+        });
+
         this.addMouseMotionListener(new MouseMotionAdapter() {
             @Override
             public void mouseDragged(MouseEvent e) {
