@@ -12,7 +12,7 @@ import javax.swing.event.MenuListener;
 @SuppressWarnings("serial")
 public class MainFrame extends JFrame {
     private static final int WIDTH = 800;
-    private static final int HEIGHT = 600;
+    private static final int HEIGHT = 800;
     private JFileChooser fileChooser = new JFileChooser();
     JMenu graphicsMenu;
     private JCheckBoxMenuItem showAxisMenuItem;
@@ -33,14 +33,16 @@ public class MainFrame extends JFrame {
         setJMenuBar(menuBar);
         JMenu fileMenu = new JMenu("Файл");
         menuBar.add(fileMenu);
-        Action openGraphicsAction = new AbstractAction("Открыть файл с графиком") 
-        {
+        Action openGraphicsAction = new AbstractAction("Открыть файл с графиком") {
             public void actionPerformed(ActionEvent event) {
-                if (fileChooser.showOpenDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION)
+                if (fileChooser.showOpenDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION){
                     openGraphics(fileChooser.getSelectedFile());
+                }
             }
         };
+
         fileMenu.add(openGraphicsAction);
+
         graphicsMenu = new JMenu("График");
         menuBar.add(graphicsMenu);
         Action showAxisAction = new AbstractAction("Показывать оси координат") {
@@ -68,8 +70,7 @@ public class MainFrame extends JFrame {
 
 
         Action showRegionsAction = new AbstractAction("Показывать замкнутые области пересечения графика с Ox") {
-            public void actionPerformed(ActionEvent event)
-            {
+            public void actionPerformed(ActionEvent event) {
                 display.setShowRegions(showRegionsMenuItem.isSelected());
             }
         };
